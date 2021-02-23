@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.cdk-overlay-pane{
+    top: 50% !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+}
+.custom-dropdown {
+    cursor: pointer;
+    .mat-form-field {
+    display: none;
+    }
+}
+
+.mat-icon{
+    color: #797979a6;
+    cursor: pointer;
+}
+.mat-select-arrow {
+     color: black
+}
+.mat-icon.mat-icon-inline{
+    font-size: 36px !important;
+    vertical-align: middle;
+}

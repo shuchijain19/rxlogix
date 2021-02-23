@@ -1,0 +1,139 @@
+<div>
+  <div class="form-header">
+    <div class="headerText">General</div>
+    <div class="right-section">
+
+      <div class="custom-dropdown">
+        <mat-icon (click)="mySelect.open()">reorder</mat-icon>
+        <mat-form-field appearance="none">
+          <mat-select [formControl]="fields" multiple style="visibility:hidden;width: 0" #mySelect
+            panelClass="testClass" (selectionChange)="onChange()">
+            <mat-option *ngFor="let field of fieldsList" [value]="field">{{field.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-icon [inline]="true">arrow_drop_down</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="form-container">
+
+    <form [formGroup]="detailForm">
+      <div class="form-field-container" formGroupName="detailsInfo">
+        <div class="field" *ngFor="let form_elem of fields.value">
+          <div [ngSwitch]="form_elem.type">
+            <div *ngSwitchCase="'textBox'">
+              <div>{{form_elem.label}}</div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="{{form_elem.label}}" formControlName="{{form_elem.label}}">
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'date'">
+              <div>{{form_elem.label}}</div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="picker" 
+                  formControlName="{{form_elem.label}}">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'select'">
+              <div>{{form_elem.label}}</div>
+              <mat-form-field appearance="outline">
+
+                <mat-select formControlName="{{form_elem.label}}" name="{{form_elem.label}}" placeholder="Select">
+                  <mat-option *ngFor="let option of form_elem.options" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="tables-container">
+        <div class="table-wrapper">
+          <div class="table-header">
+            <div class="headerText">Reference(s)</div>
+            <div class="right-section">
+              <div>
+                <mat-icon (click)="addItem()">add_circle</mat-icon>
+              </div>
+              <div>
+                <mat-icon  [inline]="true">arrow_drop_down</mat-icon>
+              </div>
+            </div>
+          </div>
+          <div class="table-body">
+            <div class="header">
+              <div># References Type</div>
+              <div>Reference ID</div>
+            </div>
+            <ng-container *ngIf="detailForm.get('referenceArray')">
+              <div formArrayName="referenceArray" class="referenec-conatiner"
+                *ngFor="let item of detailForm.get('referenceArray')['controls']; let i = index;">
+                <div [formGroupName]="i" class="reference-row">
+                  <div>
+                    <span class="index">{{i+1}}</span>
+                    <mat-form-field appearance="outline">
+                      <mat-select formControlName="resourceType"  placeholder="Select">
+                        <mat-option *ngFor="let option of referenceTypeList" [value]="option">
+                          {{option.label}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="resourceId">
+                    </mat-form-field>
+                    <mat-icon class="custom-clear" (click)="removeInfo(i)">clear</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <div class="table-header">
+            <div  class="headerText">Version Information</div>
+            <div class="right-section">
+
+              <div>
+                <mat-icon [inline]="true">arrow_drop_down</mat-icon>
+              </div>
+            </div>
+          </div>
+          <div class="table-body">
+            <table >
+             <thead>
+              <tr class="table-row">
+                <th>Version</th>
+                <th>Receipt Date</th>
+                <th>Central Receipt Date</th>
+                <th>Version Disposition</th> 
+                <th>Version Comments</th>
+              </tr>
+             </thead>
+              <tbody>
+                <tr class="table-row">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              
+            </table>
+           
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
